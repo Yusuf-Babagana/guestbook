@@ -3,12 +3,17 @@
 import { useState, useEffect } from 'react'
 import supabase from '@/lib/supabaseClient'
 
+type Guest = {
+  id: string
+  name: string
+  inserted_at: string
+}
+
 export default function Home() {
   const [name, setName] = useState('')
-  const [guests, setGuests] = useState<any[]>([])
+  const [guests, setGuests] = useState<Guest[]>([])
   const [loading, setLoading] = useState(false)
 
-  // Fetch all guests
   const fetchGuests = async () => {
     const { data, error } = await supabase
       .from('guests')
@@ -22,7 +27,6 @@ export default function Home() {
     }
   }
 
-  // Submit new guest
   const submitGuest = async () => {
     if (!name.trim()) return
 
